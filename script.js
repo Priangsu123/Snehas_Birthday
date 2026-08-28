@@ -1,927 +1,1184 @@
-/* =========================================================
+/* =========================================
+   GLOBAL VARIABLES
+========================================= */
+
+let currentSlide = 0;
+
+let currentTrack = 0;
+
+let isPlaying = false;
+
+let slideshowTimer;
+
+let gameTimer;
+
+let gameStartTime;
+
+let moveCount = 0;
+
+let currentDifficulty = "easy";
+
+let puzzlePieces = [];
+
+let countdownTimer;
+
+let targetBirthday = null;
+
+let draggedPiece = null;
+
+
+/* =========================================
+   AUDIO
+========================================= */
+
+const audioTracks = [
+
+    {
+        title: "Happy Birthday Song",
+        artist: "Birthday Collection",
+        src: "25.mp3"
+    },
+
+    {
+        title: "Celebration Time",
+        artist: "Party Hits",
+        src: "Hum_Durd.mpeg"
+    },
+
+    {
+        title: "Party Anthem",
+        artist: "Birthday Beats",
+        src: "gilheriyan.mpeg"
+    },
+    
+    {
+    title: "Song 25",
+    artist: "This is Called love",
+    src: "ApnaBanale.mpeg"
+   }
+];
+
+
+/* =========================================
+   YOUR PERSONAL PHOTOS
+========================================= */
+
+const puzzleImages = [
+
+    "Bubu1.jpeg",
+    "Bubu2.jpeg",
+    "Bubu3.jpeg",
+    "Bubu4.jpeg",
+    "Bubu5.jpeg",
+    "Bubu6.jpeg",
+    "Bubu7.jpeg",
+    "Bubu8.jpeg"
+
+];
+
+
+/* =========================================
+   DOM READY
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    initializeNavigation();
+
+    initializeGallery();
+
+    initializeMusic();
+
+    initializePuzzle();
+
+    initializeCountdown();
+
+    createConfetti();
+
+    createParticles();
+
+    initializeCelebrationButton();
+
+    initializeKeyboard();
+
+    initializeTouch();
+
+});
+
+
+/* =========================================
    NAVIGATION
-   ========================================================= */
+========================================= */
 
-const navToggle =
-    document.getElementById("navToggle");
+function initializeNavigation() {
 
-const navMenu =
-    document.getElementById("navMenu");
+    const navToggle =
+        document.getElementById("navToggle");
+
+    const navMenu =
+        document.getElementById("navMenu");
+
+    const navLinks =
+        document.querySelectorAll(".nav-link");
 
 
-if (navToggle) {
-
-    navToggle.addEventListener("click", function () {
+    navToggle.addEventListener("click", () => {
 
         navMenu.classList.toggle("active");
+
+        navToggle.classList.toggle("active");
+
+    });
+
+
+    navLinks.forEach(link => {
+
+        link.addEventListener("click", event => {
+
+            event.preventDefault();
+
+            const target =
+                document.querySelector(
+                    link.getAttribute("href")
+                );
+
+            if (target) {
+
+                window.scrollTo({
+
+                    top: target.offsetTop - 70,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+
+            navMenu.classList.remove("active");
+
+            navToggle.classList.remove("active");
+
+        });
+
+    });
+
+
+    window.addEventListener("scroll", () => {
+
+        const navbar =
+            document.getElementById("navbar");
+
+        if (window.scrollY > 100) {
+
+            navbar.style.background =
+                "rgba(255,255,255,0.98)";
+
+        } else {
+
+            navbar.style.background =
+                "rgba(255,255,255,0.95)";
+
+        }
 
     });
 
 }
 
 
-/* =========================================================
-   SECOND PAGE ELEMENTS
-   ========================================================= */
+/* =========================================
+   GALLERY
+========================================= */
 
-const mainWebsite =
-    document.getElementById("mainWebsite");
+function initializeGallery() {
 
-const celebrateBtn =
-    document.getElementById("celebrateBtn");
+    const gridButton =
+        document.getElementById("gridViewBtn");
 
-const specialMessagePage =
-    document.getElementById("specialMessagePage");
-
-const messageBalloons =
-    document.getElementById("messageBalloons");
-
-const celebrationAudio =
-    document.getElementById("celebrationAudio");
-
-const backToWebsite =
-    document.getElementById("backToWebsite");
+    const slideshowButton =
+        document.getElementById("slideshowViewBtn");
 
 
-/* =========================================================
-   START CELEBRATION
-   ========================================================= */
+    gridButton.addEventListener("click", () => {
 
-celebrateBtn.addEventListener("click", function () {
+        showGallery("grid");
 
-    /*
-       IMPORTANT:
-
-       We do NOT navigate to another HTML file.
-
-       Instead, we immediately hide the complete
-       first page and show the Special Message page.
-
-       This makes the second page feel like a completely
-       different page while keeping the user's click
-       connected to the audio.play() request.
-    */
+    });
 
 
-    /* Hide main website */
+    slideshowButton.addEventListener("click", () => {
 
-    mainWebsite.style.display = "none";
+        showGallery("slideshow");
 
-
-    /* Show special message page */
-
-    specialMessagePage.classList.add("active");
+    });
 
 
-    /* Prevent background scrolling */
+    document
+        .getElementById("prevSlideBtn")
+        .addEventListener("click", () => {
 
-    document.body.style.overflow = "hidden";
-
-
-    /* Create balloons */
-
-    createMessageBalloons();
-
-
-    /* =====================================================
-       START "THIS IS CALLED LOVE"
-       ===================================================== */
-
-    celebrationAudio.pause();
-
-    celebrationAudio.currentTime = 0;
-
-    celebrationAudio.volume = 0.7;
-
-
-    /*
-       Because this play() is executed directly from
-       the button click, the browser is much more likely
-       to allow the music to start automatically.
-    */
-
-    const playRequest =
-        celebrationAudio.play();
-
-
-    if (playRequest !== undefined) {
-
-        playRequest.catch(function (error) {
-
-            console.log(
-                "Audio autoplay was blocked by browser:",
-                error
-            );
+            changeSlide(-1);
 
         });
 
-    }
 
-});
+    document
+        .getElementById("nextSlideBtn")
+        .addEventListener("click", () => {
 
+            changeSlide(1);
 
-/* =========================================================
-   CREATE LOTS OF BALLOONS
-   ========================================================= */
-
-function createMessageBalloons() {
-
-    messageBalloons.innerHTML = "";
+        });
 
 
-    const balloonCount = 35;
+    document
+        .querySelectorAll(".indicator")
+        .forEach(indicator => {
+
+            indicator.addEventListener("click", () => {
+
+                const index =
+                    Number(indicator.dataset.slide);
+
+                goToSlide(index);
+
+            });
+
+        });
 
 
-    for (let i = 0; i < balloonCount; i++) {
+    showGallery("grid");
 
-        const balloon =
-            document.createElement("div");
-
-
-        balloon.classList.add(
-            "message-balloon"
-        );
+}
 
 
-        balloon.textContent = "🎈";
+/* =========================================
+   SHOW GRID / SLIDESHOW
+========================================= */
+
+function showGallery(type) {
+
+    const grid =
+        document.getElementById("galleryGrid");
+
+    const slideshow =
+        document.getElementById("gallerySlideshow");
 
 
-        /* Random horizontal starting position */
-
-        balloon.style.left =
-            Math.random() * 100 + "%";
+    clearInterval(slideshowTimer);
 
 
-        /* Random horizontal spreading */
+    if (type === "grid") {
 
-        const x =
-            (Math.random() - 0.5) * 700;
+        grid.style.display = "grid";
 
+        slideshow.style.display = "none";
 
-        balloon.style.setProperty(
-            "--x",
-            x + "px"
-        );
+    } else {
 
+        grid.style.display = "none";
 
-        /* Random rotation */
+        slideshow.style.display = "block";
 
-        const rotate =
-            (Math.random() - 0.5) * 90;
+        goToSlide(currentSlide);
 
-
-        balloon.style.setProperty(
-            "--rotate",
-            rotate + "deg"
-        );
-
-
-        /* Random animation duration */
-
-        const duration =
-            5 + Math.random() * 5;
-
-
-        balloon.style.setProperty(
-            "--duration",
-            duration + "s"
-        );
-
-
-        /* Stagger balloons */
-
-        const delay =
-            i * 0.12;
-
-
-        balloon.style.setProperty(
-            "--delay",
-            delay + "s"
-        );
-
-
-        messageBalloons.appendChild(
-            balloon
-        );
+        startSlideshow();
 
     }
 
 }
 
 
-/* =========================================================
-   BACK TO MAIN WEBSITE
-   ========================================================= */
-
-backToWebsite.addEventListener("click", function () {
-
-    /* Stop the special song */
-
-    celebrationAudio.pause();
-
-    celebrationAudio.currentTime = 0;
-
-
-    /* Remove balloons */
-
-    messageBalloons.innerHTML = "";
-
-
-    /* Hide second page */
-
-    specialMessagePage.classList.remove("active");
-
-
-    /* Show main website */
-
-    mainWebsite.style.display = "";
-
-
-    /* Enable scrolling */
-
-    document.body.style.overflow = "";
-
-});
-
-
-/* =========================================================
-   GALLERY GRID / SLIDESHOW
-   ========================================================= */
-
-const gridViewBtn =
-    document.getElementById("gridViewBtn");
-
-const slideshowViewBtn =
-    document.getElementById("slideshowViewBtn");
-
-const galleryGrid =
-    document.getElementById("galleryGrid");
-
-const gallerySlideshow =
-    document.getElementById("gallerySlideshow");
-
-
-gridViewBtn.addEventListener("click", function () {
-
-    galleryGrid.style.display = "grid";
-
-    gallerySlideshow.style.display = "none";
-
-});
-
-
-slideshowViewBtn.addEventListener("click", function () {
-
-    galleryGrid.style.display = "none";
-
-    gallerySlideshow.style.display = "block";
-
-});
-
-
-/* =========================================================
+/* =========================================
    SLIDESHOW
-   ========================================================= */
+========================================= */
 
-const slides =
-    document.querySelectorAll(".slide");
+function changeSlide(direction) {
 
-const indicators =
-    document.querySelectorAll(".indicator");
-
-const prevSlideBtn =
-    document.getElementById("prevSlideBtn");
-
-const nextSlideBtn =
-    document.getElementById("nextSlideBtn");
+    const slides =
+        document.querySelectorAll(".slide");
 
 
-let currentSlide = 0;
+    if (!slides.length) return;
 
 
-function showSlide(index) {
+    currentSlide += direction;
 
-    if (index < 0) {
 
-        index = slides.length - 1;
+    if (currentSlide >= slides.length) {
+
+        currentSlide = 0;
 
     }
 
 
-    if (index >= slides.length) {
+    if (currentSlide < 0) {
 
-        index = 0;
+        currentSlide = slides.length - 1;
 
     }
 
 
-    slides.forEach(function (slide) {
+    goToSlide(currentSlide);
+
+}
+
+
+function goToSlide(index) {
+
+    const slides =
+        document.querySelectorAll(".slide");
+
+    const indicators =
+        document.querySelectorAll(".indicator");
+
+
+    if (!slides.length) return;
+
+
+    slides.forEach(slide => {
 
         slide.classList.remove("active");
 
     });
 
 
-    indicators.forEach(function (indicator) {
+    indicators.forEach(indicator => {
 
         indicator.classList.remove("active");
 
     });
 
 
-    slides[index].classList.add("active");
-
-    indicators[index].classList.add("active");
-
-
     currentSlide = index;
 
-}
+
+    slides[currentSlide]
+        .classList.add("active");
 
 
-prevSlideBtn.addEventListener(
-    "click",
-    function () {
+    if (indicators[currentSlide]) {
 
-        showSlide(currentSlide - 1);
-
-    }
-);
-
-
-nextSlideBtn.addEventListener(
-    "click",
-    function () {
-
-        showSlide(currentSlide + 1);
-
-    }
-);
-
-
-indicators.forEach(function (indicator) {
-
-    indicator.addEventListener(
-        "click",
-        function () {
-
-            const index =
-                Number(
-                    indicator.dataset.slide
-                );
-
-            showSlide(index);
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   MUSIC PLAYER
-   ========================================================= */
-
-const audioPlayer =
-    document.getElementById("audioPlayer");
-
-const playPauseBtn =
-    document.getElementById("playPauseBtn");
-
-const prevTrackBtn =
-    document.getElementById("prevTrackBtn");
-
-const nextTrackBtn =
-    document.getElementById("nextTrackBtn");
-
-const volumeSlider =
-    document.getElementById("volumeSlider");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const progress =
-    document.getElementById("progress");
-
-const currentTimeDisplay =
-    document.getElementById("currentTime");
-
-const durationDisplay =
-    document.getElementById("duration");
-
-const trackTitle =
-    document.getElementById("trackTitle");
-
-const vinylRecord =
-    document.getElementById("vinylRecord");
-
-const playlistItems =
-    document.querySelectorAll(".playlist-item");
-
-
-/*
-   Your songs
-*/
-
-const tracks = [
-
-    {
-        title: "This is called love",
-        artist: "Birthday Collection",
-        src: "audio/25.mp3"
-    },
-
-    {
-        title: "Hum Durd",
-        artist: "Bubu's Favourite Songs",
-        src: "audio/Hum_Durd.mpeg"
-    },
-
-    {
-        title: "Gilheriyan",
-        artist: "Bubu's Favourite Songs",
-        src: "audio/gilheriyan.mpeg"
-    },
-
-    {
-        title: "Apna Bana Le Piya",
-        artist: "Bubu's Favourite Songs",
-        src: "audio/ApnaBanale.mpeg"
-    }
-
-];
-
-
-let currentTrack = 0;
-
-
-/* Load track */
-
-function loadTrack(index) {
-
-    currentTrack = index;
-
-    audioPlayer.src =
-        tracks[index].src;
-
-    trackTitle.textContent =
-        tracks[index].title;
-
-
-    playlistItems.forEach(
-        function (item) {
-
-            item.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    if (playlistItems[index]) {
-
-        playlistItems[index]
+        indicators[currentSlide]
             .classList.add("active");
 
     }
 
+}
 
-    audioPlayer.load();
+
+function startSlideshow() {
+
+    clearInterval(slideshowTimer);
+
+
+    slideshowTimer = setInterval(() => {
+
+        changeSlide(1);
+
+    }, 5000);
 
 }
 
 
-/* Play */
+/* =========================================
+   CONFETTI
+========================================= */
 
-function playTrack() {
+function createConfetti() {
 
-    audioPlayer.play();
+    const container =
+        document.getElementById("confettiContainer");
 
-    playPauseBtn.textContent = "⏸️";
 
-    vinylRecord.classList.add(
-        "playing"
+    if (!container) return;
+
+
+    container.innerHTML = "";
+
+
+    const colors = [
+
+        "#ff6b9d",
+        "#4ecdc4",
+        "#45b7d1",
+        "#ffeaa7",
+        "#fd79a8",
+        "#00cec9"
+
+    ];
+
+
+    for (let i = 0; i < 50; i++) {
+
+        const confetti =
+            document.createElement("div");
+
+
+        confetti.className = "confetti";
+
+        confetti.style.left =
+            Math.random() * 100 + "%";
+
+        confetti.style.backgroundColor =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+        confetti.style.animationDelay =
+            Math.random() * 3 + "s";
+
+
+        container.appendChild(confetti);
+
+    }
+
+}
+
+
+function explodeConfetti() {
+
+    const container =
+        document.getElementById("confettiContainer");
+
+
+    const colors = [
+
+        "#ff6b9d",
+        "#4ecdc4",
+        "#45b7d1",
+        "#ffeaa7",
+        "#fd79a8"
+
+    ];
+
+
+    for (let i = 0; i < 100; i++) {
+
+        const confetti =
+            document.createElement("div");
+
+
+        confetti.className = "confetti";
+
+
+        confetti.style.left =
+            Math.random() * 100 + "%";
+
+
+        confetti.style.backgroundColor =
+            colors[
+                Math.floor(
+                    Math.random() * colors.length
+                )
+            ];
+
+
+        container.appendChild(confetti);
+
+
+        setTimeout(() => {
+
+            confetti.remove();
+
+        }, 3000);
+
+    }
+
+}
+
+
+/* =========================================
+   PARTICLES
+========================================= */
+
+function createParticles() {
+
+    const container =
+        document.getElementById("particles");
+
+
+    for (let i = 0; i < 30; i++) {
+
+        const particle =
+            document.createElement("div");
+
+
+        particle.className = "particle";
+
+
+        particle.style.left =
+            Math.random() * 100 + "%";
+
+
+        particle.style.animationDelay =
+            Math.random() * 8 + "s";
+
+
+        particle.style.animationDuration =
+            Math.random() * 4 + 6 + "s";
+
+
+        container.appendChild(particle);
+
+    }
+
+}
+
+
+/* =========================================
+   CELEBRATION BUTTON
+========================================= */
+
+function initializeCelebrationButton() {
+
+    const button =
+        document.getElementById("celebrateBtn");
+
+
+    button.addEventListener("click", () => {
+
+        explodeConfetti();
+
+        const gallery =
+            document.getElementById("gallery");
+
+
+        window.scrollTo({
+
+            top: gallery.offsetTop - 70,
+
+            behavior: "smooth"
+
+        });
+
+    });
+
+}
+
+
+/* =========================================
+   MUSIC PLAYER
+========================================= */
+
+function initializeMusic() {
+
+    const audio =
+        document.getElementById("audioPlayer");
+
+    const playButton =
+        document.getElementById("playPauseBtn");
+
+    const previousButton =
+        document.getElementById("prevTrackBtn");
+
+    const nextButton =
+        document.getElementById("nextTrackBtn");
+
+    const volume =
+        document.getElementById("volumeSlider");
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+
+    loadTrack(0);
+
+
+    playButton.addEventListener("click", toggleMusic);
+
+
+    previousButton.addEventListener(
+        "click",
+        previousTrack
     );
 
-}
 
-
-/* Pause */
-
-function pauseTrack() {
-
-    audioPlayer.pause();
-
-    playPauseBtn.textContent = "▶️";
-
-    vinylRecord.classList.remove(
-        "playing"
+    nextButton.addEventListener(
+        "click",
+        nextTrack
     );
 
-}
+
+    volume.addEventListener("input", () => {
+
+        audio.volume =
+            volume.value / 100;
+
+    });
 
 
-/* Play / Pause */
-
-playPauseBtn.addEventListener(
-    "click",
-    function () {
-
-        if (audioPlayer.paused) {
-
-            playTrack();
-
-        } else {
-
-            pauseTrack();
-
-        }
-
-    }
-);
+    progressBar.addEventListener(
+        "click",
+        seekAudio
+    );
 
 
-/* Next */
-
-nextTrackBtn.addEventListener(
-    "click",
-    function () {
-
-        let next =
-            currentTrack + 1;
+    audio.addEventListener(
+        "timeupdate",
+        updateAudioProgress
+    );
 
 
-        if (next >= tracks.length) {
-
-            next = 0;
-
-        }
-
-
-        loadTrack(next);
-
-        playTrack();
-
-    }
-);
+    audio.addEventListener(
+        "loadedmetadata",
+        updateDuration
+    );
 
 
-/* Previous */
+    audio.addEventListener("ended", () => {
 
-prevTrackBtn.addEventListener(
-    "click",
-    function () {
+        nextTrack();
 
-        let previous =
-            currentTrack - 1;
+    });
 
 
-        if (previous < 0) {
+    document
+        .querySelectorAll(".playlist-item")
+        .forEach((item, index) => {
 
-            previous =
-                tracks.length - 1;
-
-        }
-
-
-        loadTrack(previous);
-
-        playTrack();
-
-    }
-);
-
-
-/* Playlist */
-
-playlistItems.forEach(
-    function (item) {
-
-        item.addEventListener(
-            "click",
-            function () {
-
-                const index =
-                    Number(
-                        item.dataset.track
-                    );
+            item.addEventListener("click", () => {
 
                 loadTrack(index);
 
-                playTrack();
+                audio.play();
 
-            }
-        );
+                isPlaying = true;
 
-    }
-);
+                updatePlayButton();
 
+            });
 
-/* Volume */
+        });
 
-volumeSlider.addEventListener(
-    "input",
-    function () {
-
-        audioPlayer.volume =
-            volumeSlider.value / 100;
-
-    }
-);
+}
 
 
-/* Progress */
+function loadTrack(index) {
 
-audioPlayer.addEventListener(
-    "timeupdate",
-    function () {
-
-        if (!audioPlayer.duration) {
-            return;
-        }
+    const audio =
+        document.getElementById("audioPlayer");
 
 
-        const percentage =
-            (
-                audioPlayer.currentTime /
-                audioPlayer.duration
-            ) * 100;
+    const title =
+        document.getElementById("trackTitle");
+
+    const artist =
+        document.getElementById("trackArtist");
 
 
-        progress.style.width =
-            percentage + "%";
+    currentTrack = index;
 
 
-        currentTimeDisplay.textContent =
-            formatTime(
-                audioPlayer.currentTime
+    audio.src =
+        audioTracks[index].src;
+
+
+    title.textContent =
+        audioTracks[index].title;
+
+
+    artist.textContent =
+        audioTracks[index].artist;
+
+
+    document
+        .querySelectorAll(".playlist-item")
+        .forEach((item, i) => {
+
+            item.classList.toggle(
+                "active",
+                i === index
             );
 
-    }
-);
+        });
+
+}
 
 
-/* Duration */
+function toggleMusic() {
 
-audioPlayer.addEventListener(
-    "loadedmetadata",
-    function () {
-
-        durationDisplay.textContent =
-            formatTime(
-                audioPlayer.duration
-            );
-
-    }
-);
+    const audio =
+        document.getElementById("audioPlayer");
 
 
-/* Progress click */
+    if (audio.paused) {
 
-progressBar.addEventListener(
-    "click",
-    function (event) {
+        audio.play()
+            .then(() => {
 
-        if (!audioPlayer.duration) {
-            return;
-        }
+                isPlaying = true;
 
+                updatePlayButton();
 
-        const width =
-            progressBar.clientWidth;
+            })
+            .catch(error => {
 
+                console.log(
+                    "Audio could not start:",
+                    error
+                );
 
-        const clickX =
-            event.offsetX;
+            });
 
+    } else {
 
-        audioPlayer.currentTime =
-            (
-                clickX / width
-            ) *
-            audioPlayer.duration;
+        audio.pause();
+
+        isPlaying = false;
+
+        updatePlayButton();
 
     }
-);
+
+}
 
 
-/* Automatic next song */
+function updatePlayButton() {
 
-audioPlayer.addEventListener(
-    "ended",
-    function () {
+    const button =
+        document.getElementById("playPauseBtn");
 
-        let next =
-            currentTrack + 1;
-
-
-        if (next >= tracks.length) {
-
-            next = 0;
-
-        }
+    const vinyl =
+        document.getElementById("vinylRecord");
 
 
-        loadTrack(next);
+    button.textContent =
+        isPlaying ? "⏸️" : "▶️";
 
-        playTrack();
+
+    if (isPlaying) {
+
+        vinyl.classList.add("playing");
+
+    } else {
+
+        vinyl.classList.remove("playing");
 
     }
-);
+
+}
 
 
-/* Time formatting */
+function previousTrack() {
+
+    currentTrack--;
+
+    if (currentTrack < 0) {
+
+        currentTrack =
+            audioTracks.length - 1;
+
+    }
+
+    loadTrack(currentTrack);
+
+    playCurrentTrack();
+
+}
+
+
+function nextTrack() {
+
+    currentTrack++;
+
+    if (currentTrack >= audioTracks.length) {
+
+        currentTrack = 0;
+
+    }
+
+    loadTrack(currentTrack);
+
+    playCurrentTrack();
+
+}
+
+
+function playCurrentTrack() {
+
+    const audio =
+        document.getElementById("audioPlayer");
+
+
+    audio.play()
+        .then(() => {
+
+            isPlaying = true;
+
+            updatePlayButton();
+
+        })
+        .catch(() => {});
+
+}
+
+
+function updateDuration() {
+
+    const audio =
+        document.getElementById("audioPlayer");
+
+    const duration =
+        document.getElementById("duration");
+
+
+    if (!isNaN(audio.duration)) {
+
+        duration.textContent =
+            formatTime(audio.duration);
+
+    }
+
+}
+
+
+function updateAudioProgress() {
+
+    const audio =
+        document.getElementById("audioPlayer");
+
+    const progress =
+        document.getElementById("progress");
+
+    const currentTime =
+        document.getElementById("currentTime");
+
+
+    if (!audio.duration) return;
+
+
+    const percent =
+        (audio.currentTime / audio.duration) * 100;
+
+
+    progress.style.width =
+        percent + "%";
+
+
+    currentTime.textContent =
+        formatTime(audio.currentTime);
+
+}
+
+
+function seekAudio(event) {
+
+    const audio =
+        document.getElementById("audioPlayer");
+
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+
+    if (!audio.duration) return;
+
+
+    const rect =
+        progressBar.getBoundingClientRect();
+
+
+    const position =
+        (event.clientX - rect.left) /
+        rect.width;
+
+
+    audio.currentTime =
+        position * audio.duration;
+
+}
+
 
 function formatTime(seconds) {
 
-    if (isNaN(seconds)) {
-        return "0:00";
-    }
+    if (isNaN(seconds)) return "0:00";
 
 
     const minutes =
         Math.floor(seconds / 60);
 
 
-    const remainingSeconds =
+    const secs =
         Math.floor(seconds % 60);
 
 
     return (
         minutes +
         ":" +
-        String(
-            remainingSeconds
-        ).padStart(2, "0")
+        secs.toString().padStart(2, "0")
     );
 
 }
 
 
-/* Initial track */
+/* =========================================
+   PUZZLE
+========================================= */
 
-loadTrack(0);
+function initializePuzzle() {
+
+    const difficulty =
+        document.getElementById(
+            "difficultySelect"
+        );
 
 
-/* =========================================================
-   COUNTDOWN
-   ========================================================= */
+    difficulty.addEventListener(
+        "change",
+        () => {
 
-const birthdayDate =
-    document.getElementById(
-        "birthdayDate"
-    );
+            currentDifficulty =
+                difficulty.value;
 
-const days =
-    document.getElementById("days");
+            startNewGame();
 
-const hours =
-    document.getElementById("hours");
-
-const minutes =
-    document.getElementById("minutes");
-
-const seconds =
-    document.getElementById("seconds");
-
-const countdownMessage =
-    document.getElementById(
-        "countdownMessage"
+        }
     );
 
 
-birthdayDate.addEventListener(
-    "change",
-    updateCountdown
-);
+    document
+        .getElementById("newGameBtn")
+        .addEventListener(
+            "click",
+            startNewGame
+        );
 
 
-function updateCountdown() {
+    document
+        .getElementById("showSolutionBtn")
+        .addEventListener(
+            "click",
+            showSolution
+        );
 
-    const target =
-        new Date(
-            birthdayDate.value
-        ).getTime();
+
+    document
+        .getElementById("playAgainBtn")
+        .addEventListener(
+            "click",
+            startNewGame
+        );
 
 
-    if (isNaN(target)) {
-        return;
+    startNewGame();
+
+}
+
+
+function getGridSize() {
+
+    if (currentDifficulty === "medium") {
+
+        return 4;
+
+    }
+
+    if (currentDifficulty === "hard") {
+
+        return 5;
+
+    }
+
+    return 3;
+
+}
+
+
+function startNewGame() {
+
+    clearInterval(gameTimer);
+
+
+    moveCount = 0;
+
+    gameStartTime = Date.now();
+
+
+    updateGameStats();
+
+
+    document
+        .getElementById("gameCompletion")
+        .style.display = "none";
+
+
+    generatePuzzle();
+
+    shufflePuzzle();
+
+    startGameTimer();
+
+}
+
+
+function generatePuzzle() {
+
+    const board =
+        document.getElementById("puzzleBoard");
+
+    const solution =
+        document.getElementById("solutionImage");
+
+
+    const gridSize =
+        getGridSize();
+
+
+    const image =
+        puzzleImages[
+            Math.floor(
+                Math.random() *
+                puzzleImages.length
+            )
+        ];
+
+
+    solution.src = image;
+
+
+    board.innerHTML = "";
+
+
+    board.style.gridTemplateColumns =
+        `repeat(${gridSize}, 1fr)`;
+
+
+    board.style.width =
+        "300px";
+
+
+    board.style.height =
+        "300px";
+
+
+    puzzlePieces = [];
+
+
+    const total =
+        gridSize * gridSize;
+
+
+    for (let i = 0; i < total; i++) {
+
+        const piece =
+            document.createElement("div");
+
+
+        piece.className =
+            "puzzle-piece";
+
+
+        piece.dataset.correct =
+            i;
+
+
+        piece.dataset.position =
+            i;
+
+
+        const row =
+            Math.floor(i / gridSize);
+
+
+        const col =
+            i % gridSize;
+
+
+        const x =
+            (col / (gridSize - 1)) * 100;
+
+
+        const y =
+            (row / (gridSize - 1)) * 100;
+
+
+        piece.style.backgroundImage =
+            `url("${image}")`;
+
+
+        piece.style.backgroundSize =
+            `${gridSize * 100}% ${gridSize * 100}%`;
+
+
+        piece.style.backgroundPosition =
+            `${x}% ${y}%`;
+
+
+        piece.draggable = true;
+
+
+        piece.addEventListener(
+            "dragstart",
+            dragStart
+        );
+
+
+        piece.addEventListener(
+            "dragover",
+            dragOver
+        );
+
+
+        piece.addEventListener(
+            "drop",
+            dropPiece
+        );
+
+
+        piece.addEventListener(
+            "dragend",
+            dragEnd
+        );
+
+
+        board.appendChild(piece);
+
+        puzzlePieces.push(piece);
+
+    }
+
+}
+
+
+function shufflePuzzle() {
+
+    for (
+        let i = puzzlePieces.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        [
+            puzzlePieces[i],
+            puzzlePieces[j]
+        ] =
+        [
+            puzzlePieces[j],
+            puzzlePieces[i]
+        ];
+
     }
 
 
-    const interval =
-        setInterval(function () {
-
-            const now =
-                new Date().getTime();
+    const board =
+        document.getElementById("puzzleBoard");
 
 
-            const difference =
-                target - now;
+    puzzlePieces.forEach(
+        (piece, index) => {
 
+            piece.dataset.position =
+                index;
 
-            if (difference <= 0) {
-
-                clearInterval(interval);
-
-
-                days.textContent = "00";
-                hours.textContent = "00";
-                minutes.textContent = "00";
-                seconds.textContent = "00";
-
-
-                countdownMessage.innerHTML =
-                    "<p>🎉 Happy Birthday Bubu! 🎂❤️</p>";
-
-                return;
-
-            }
-
-
-            const d =
-                Math.floor(
-                    difference /
-                    (1000 * 60 * 60 * 24)
-                );
-
-
-            const h =
-                Math.floor(
-                    (
-                        difference %
-                        (1000 * 60 * 60 * 24)
-                    ) /
-                    (1000 * 60 * 60)
-                );
-
-
-            const m =
-                Math.floor(
-                    (
-                        difference %
-                        (1000 * 60 * 60)
-                    ) /
-                    (1000 * 60)
-                );
-
-
-            const s =
-                Math.floor(
-                    (
-                        difference %
-                        (1000 * 60)
-                    ) /
-                    1000
-                );
-
-
-            days.textContent =
-                String(d).padStart(2, "0");
-
-
-            hours.textContent =
-                String(h).padStart(2, "0");
-
-
-            minutes.textContent =
-                String(m).padStart(2, "0");
-
-
-            seconds.textContent =
-                String(s).padStart(2, "0");
-
-
-        }, 1000);
-
-}
-
-
-/* =========================================================
-   SIMPLE PUZZLE PLACEHOLDER
-   ========================================================= */
-
-const newGameBtn =
-    document.getElementById(
-        "newGameBtn"
-    );
-
-const playAgainBtn =
-    document.getElementById(
-        "playAgainBtn"
-    );
-
-
-if (newGameBtn) {
-
-    newGameBtn.addEventListener(
-        "click",
-        function () {
-
-            alert(
-                "🎂 New Birthday Puzzle Started!"
-            );
+            board.appendChild(piece);
 
         }
     );
@@ -929,15 +1186,623 @@ if (newGameBtn) {
 }
 
 
-if (playAgainBtn) {
+function dragStart(event) {
 
-    playAgainBtn.addEventListener(
-        "click",
-        function () {
+    draggedPiece =
+        event.target;
 
-            alert(
-                "🎉 Let's play again, Bubu!"
-            );
+    draggedPiece.classList.add(
+        "dragging"
+    );
+
+}
+
+
+function dragOver(event) {
+
+    event.preventDefault();
+
+}
+
+
+function dropPiece(event) {
+
+    event.preventDefault();
+
+
+    const target =
+        event.target;
+
+
+    if (
+        !draggedPiece ||
+        target === draggedPiece ||
+        !target.classList.contains(
+            "puzzle-piece"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const board =
+        document.getElementById(
+            "puzzleBoard"
+        );
+
+
+    const children =
+        Array.from(
+            board.children
+        );
+
+
+    const draggedIndex =
+        children.indexOf(
+            draggedPiece
+        );
+
+
+    const targetIndex =
+        children.indexOf(
+            target
+        );
+
+
+    if (
+        draggedIndex === -1 ||
+        targetIndex === -1
+    ) {
+
+        return;
+
+    }
+
+
+    if (draggedIndex < targetIndex) {
+
+        board.insertBefore(
+            target,
+            draggedPiece
+        );
+
+    } else {
+
+        board.insertBefore(
+            draggedPiece,
+            target
+        );
+
+    }
+
+
+    updatePositions();
+
+
+    moveCount++;
+
+    updateGameStats();
+
+
+    checkPuzzle();
+
+}
+
+
+function dragEnd() {
+
+    if (draggedPiece) {
+
+        draggedPiece.classList.remove(
+            "dragging"
+        );
+
+    }
+
+    draggedPiece = null;
+
+}
+
+
+function updatePositions() {
+
+    puzzlePieces =
+        Array.from(
+            document.querySelectorAll(
+                ".puzzle-piece"
+            )
+        );
+
+
+    puzzlePieces.forEach(
+        (piece, index) => {
+
+            piece.dataset.position =
+                index;
+
+        }
+    );
+
+}
+
+
+function checkPuzzle() {
+
+    const correct =
+        puzzlePieces.every(
+            (piece, index) => {
+
+                return Number(
+                    piece.dataset.correct
+                ) === index;
+
+            }
+        );
+
+
+    if (correct) {
+
+        clearInterval(gameTimer);
+
+        showCompletion();
+
+        explodeConfetti();
+
+    }
+
+}
+
+
+function showSolution() {
+
+    const board =
+        document.getElementById(
+            "puzzleBoard"
+        );
+
+
+    puzzlePieces.sort(
+        (a, b) =>
+            Number(a.dataset.correct) -
+            Number(b.dataset.correct)
+    );
+
+
+    puzzlePieces.forEach(
+        piece => {
+
+            board.appendChild(piece);
+
+        }
+    );
+
+
+    updatePositions();
+
+    checkPuzzle();
+
+}
+
+
+function startGameTimer() {
+
+    gameTimer =
+        setInterval(() => {
+
+            const elapsed =
+                Math.floor(
+                    (Date.now() -
+                        gameStartTime) /
+                    1000
+                );
+
+
+            const minutes =
+                Math.floor(
+                    elapsed / 60
+                );
+
+
+            const seconds =
+                elapsed % 60;
+
+
+            document
+                .getElementById(
+                    "gameTimer"
+                )
+                .textContent =
+                `${minutes}:${seconds
+                    .toString()
+                    .padStart(2, "0")}`;
+
+        }, 1000);
+
+}
+
+
+function updateGameStats() {
+
+    document
+        .getElementById("moveCounter")
+        .textContent =
+        moveCount;
+
+}
+
+
+function showCompletion() {
+
+    const elapsed =
+        Math.floor(
+            (Date.now() -
+                gameStartTime) /
+            1000
+        );
+
+
+    const minutes =
+        Math.floor(elapsed / 60);
+
+
+    const seconds =
+        elapsed % 60;
+
+
+    document
+        .getElementById("finalTime")
+        .textContent =
+        `${minutes}:${seconds
+            .toString()
+            .padStart(2, "0")}`;
+
+
+    document
+        .getElementById("finalMoves")
+        .textContent =
+        moveCount;
+
+
+    document
+        .getElementById("gameCompletion")
+        .style.display = "flex";
+
+}
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+function initializeCountdown() {
+
+    const input =
+        document.getElementById(
+            "birthdayDate"
+        );
+
+
+    const now =
+        new Date();
+
+
+    now.setFullYear(
+        now.getFullYear() + 1
+    );
+
+
+    now.setHours(
+        0, 0, 0, 0
+    );
+
+
+    input.value =
+        getDateTimeLocal(now);
+
+
+    input.addEventListener(
+        "change",
+        updateCountdown
+    );
+
+
+    updateCountdown();
+
+}
+
+
+function getDateTimeLocal(date) {
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(2, "0");
+
+
+    const hours =
+        String(
+            date.getHours()
+        ).padStart(2, "0");
+
+
+    const minutes =
+        String(
+            date.getMinutes()
+        ).padStart(2, "0");
+
+
+    return (
+        `${year}-${month}-${day}` +
+        `T${hours}:${minutes}`
+    );
+
+}
+
+
+function updateCountdown() {
+
+    const input =
+        document.getElementById(
+            "birthdayDate"
+        );
+
+
+    targetBirthday =
+        new Date(input.value);
+
+
+    clearInterval(
+        countdownTimer
+    );
+
+
+    calculateCountdown();
+
+
+    countdownTimer =
+        setInterval(
+            calculateCountdown,
+            1000
+        );
+
+}
+
+
+function calculateCountdown() {
+
+    if (!targetBirthday) return;
+
+
+    const difference =
+        targetBirthday.getTime() -
+        Date.now();
+
+
+    if (difference <= 0) {
+
+        setCountdownValue(
+            "days",
+            "00"
+        );
+
+        setCountdownValue(
+            "hours",
+            "00"
+        );
+
+        setCountdownValue(
+            "minutes",
+            "00"
+        );
+
+        setCountdownValue(
+            "seconds",
+            "00"
+        );
+
+
+        document
+            .getElementById(
+                "countdownMessage"
+            )
+            .innerHTML =
+            "<p>🎉 Happy Birthday! 🎂</p>";
+
+
+        return;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (difference %
+                (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
+
+
+    const minutes =
+        Math.floor(
+            (difference %
+                (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
+
+
+    const seconds =
+        Math.floor(
+            (difference %
+                (1000 * 60)) /
+            1000
+        );
+
+
+    setCountdownValue(
+        "days",
+        days
+    );
+
+    setCountdownValue(
+        "hours",
+        hours
+    );
+
+    setCountdownValue(
+        "minutes",
+        minutes
+    );
+
+    setCountdownValue(
+        "seconds",
+        seconds
+    );
+
+
+    document
+        .getElementById(
+            "countdownMessage"
+        )
+        .innerHTML =
+        `<p>🎂 ${days} days until the special day! ❤️</p>`;
+
+}
+
+
+function setCountdownValue(
+    id,
+    value
+) {
+
+    document
+        .getElementById(id)
+        .textContent =
+        String(value)
+            .padStart(2, "0");
+
+}
+
+
+/* =========================================
+   KEYBOARD
+========================================= */
+
+function initializeKeyboard() {
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            const slideshow =
+                document.getElementById(
+                    "gallerySlideshow"
+                );
+
+
+            if (
+                slideshow.style.display ===
+                "block"
+            ) {
+
+                if (
+                    event.key ===
+                    "ArrowLeft"
+                ) {
+
+                    changeSlide(-1);
+
+                }
+
+
+                if (
+                    event.key ===
+                    "ArrowRight"
+                ) {
+
+                    changeSlide(1);
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   MOBILE SWIPE
+========================================= */
+
+let touchStartX = 0;
+
+let touchEndX = 0;
+
+
+function initializeTouch() {
+
+    document.addEventListener(
+        "touchstart",
+        event => {
+
+            touchStartX =
+                event.changedTouches[0]
+                    .screenX;
+
+        }
+    );
+
+
+    document.addEventListener(
+        "touchend",
+        event => {
+
+            touchEndX =
+                event.changedTouches[0]
+                    .screenX;
+
+
+            const difference =
+                touchStartX -
+                touchEndX;
+
+
+            if (
+                Math.abs(difference) >
+                50
+            ) {
+
+                if (difference > 0) {
+
+                    changeSlide(1);
+
+                } else {
+
+                    changeSlide(-1);
+
+                }
+
+            }
 
         }
     );
