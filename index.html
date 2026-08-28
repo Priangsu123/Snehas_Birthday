@@ -4,916 +4,1055 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>🎉 Birthday Celebration 🎂</title>
+    <title>🎉 Bubu's Birthday Celebration 🎂</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@300;400;600;700&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 
 <body>
 
-    <!-- Animated Background Elements -->
-    <div class="background-animation">
+    <!-- =====================================================
+         MAIN WEBSITE
+         ===================================================== -->
 
-        <div class="floating-balloons">
+    <div id="mainWebsite">
 
-            <div class="balloon balloon-1">🎈</div>
-            <div class="balloon balloon-2">🎈</div>
-            <div class="balloon balloon-3">🎈</div>
-            <div class="balloon balloon-4">🎈</div>
-            <div class="balloon balloon-5">🎈</div>
+        <!-- Background -->
+        <div class="background-animation">
+
+            <div class="floating-balloons">
+
+                <div class="balloon balloon-1">🎈</div>
+                <div class="balloon balloon-2">🎈</div>
+                <div class="balloon balloon-3">🎈</div>
+                <div class="balloon balloon-4">🎈</div>
+                <div class="balloon balloon-5">🎈</div>
+
+            </div>
+
+            <div class="confetti-container"
+                id="confettiContainer">
+            </div>
+
+            <div class="particles"
+                id="particles">
+            </div>
 
         </div>
 
-        <div class="confetti-container"
-             id="confettiContainer"></div>
 
-        <div class="particles"
-             id="particles"></div>
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <nav class="navbar"
+            id="navbar">
+
+            <div class="nav-container">
+
+                <div class="nav-logo">
+                    🎂 Birthday Bash
+                </div>
+
+
+                <div class="nav-toggle"
+                    id="navToggle">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <ul class="nav-menu"
+                    id="navMenu">
+
+                    <li>
+                        <a href="#home"
+                            class="nav-link">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#gallery"
+                            class="nav-link">
+                            Gallery
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#music"
+                            class="nav-link">
+                            Music
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#game"
+                            class="nav-link">
+                            Game
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#countdown"
+                            class="nav-link">
+                            Countdown
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =================================================
+             HOME / HERO
+             ================================================= -->
+
+        <section id="home"
+            class="hero">
+
+            <div class="hero-content">
+
+                <h1 class="hero-title animate-bounce">
+                    Advance Happy Birthday Bubu! 🎉
+                </h1>
+
+
+                <p class="hero-subtitle">
+                    Let's celebrate this special day together!
+                </p>
+
+
+                <div class="birthday-candles">
+
+                    <div class="candle">
+
+                        <div class="flame"></div>
+                        <div class="wick"></div>
+                        <div class="wax"></div>
+
+                    </div>
+
+
+                    <div class="candle">
+
+                        <div class="flame"></div>
+                        <div class="wick"></div>
+                        <div class="wax"></div>
+
+                    </div>
+
+
+                    <div class="candle">
+
+                        <div class="flame"></div>
+                        <div class="wick"></div>
+                        <div class="wax"></div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="cta-button"
+                    id="celebrateBtn">
+
+                    Start the Celebration! 🎊
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BIRTHDAY WISH SECTION
+             ================================================= -->
+
+        <section class="birthday-wish-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+                    💖 A Special Message for You
+                </h2>
+
+
+                <div class="birthday-wish">
+
+                    <p>
+                        Advance Happy Birthday, Bubu! 🎂❤️
+                    </p>
+
+
+                    <p>
+                        Happy Birthday!
+                        Wishing you a fantastic day filled with
+                        celebration, great food, and even better
+                        company. May this year bring you continuous
+                        happiness, new adventures, and success in
+                        everything you do.
+                    </p>
+
+
+                    <p>
+                        With lots of love ❤️
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GALLERY
+             ================================================= -->
+
+        <section id="gallery"
+            class="gallery-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+                    📸 Memory Gallery
+                </h2>
+
+
+                <div class="gallery-controls">
+
+                    <button class="gallery-btn"
+                        id="gridViewBtn">
+                        Grid View
+                    </button>
+
+
+                    <button class="gallery-btn"
+                        id="slideshowViewBtn">
+                        Slideshow
+                    </button>
+
+                </div>
+
+
+                <!-- Grid -->
+
+                <div class="gallery-grid"
+                    id="galleryGrid">
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu1.jpeg"
+                            alt="Educated Bubu">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Educated Bubu
+                            </h3>
+
+                            <p>
+                                Bubu spend her time with family
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu2.jpeg"
+                            alt="Professional Bubu">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Professional Bubu
+                            </h3>
+
+                            <p>
+                                Bubu when travel with college friend
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu3.jpeg"
+                            alt="Smart Bubu">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Smart Bubu
+                            </h3>
+
+                            <p>
+                                Educational tour in college trip
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu4.jpeg"
+                            alt="Cute Bubu">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Cute Bubu Rani
+                            </h3>
+
+                            <p>
+                                Pure beauty of Bubu
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu5.jpeg"
+                            alt="Bhoot Bubu">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Bhoot Bubu
+                            </h3>
+
+                            <p>
+                                Bubu celebrate Holi but not with me
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gallery-item">
+
+                        <img src="Bubu6.jpeg"
+                            alt="Bubu in phase of Ma Durga">
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+                                Bubu in phase of Ma Durga
+                            </h3>
+
+                            <p>
+                                Bubu in the face of Ma Durga,
+                                real beauty of Ma Durga
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Slideshow -->
+
+                <div class="gallery-slideshow"
+                    id="gallerySlideshow"
+                    style="display:none;">
+
+                    <div class="slideshow-container">
+
+
+                        <div class="slide active">
+
+                            <img src="Bubu7.jpeg"
+                                alt="Bubu Museum">
+
+                            <div class="slide-caption">
+                                Bubu in Museum explore alone
+                            </div>
+
+                        </div>
+
+
+                        <div class="slide">
+
+                            <img src="Bubu8.jpeg"
+                                alt="Bubu with friend">
+
+                            <div class="slide-caption">
+                                Bubu with her friend
+                            </div>
+
+                        </div>
+
+
+                        <div class="slide">
+
+                            <img src="Bubu3.jpeg"
+                                alt="Traditional Bubu">
+
+                            <div class="slide-caption">
+                                Bubu follow traditional
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="slide-btn prev"
+                        id="prevSlideBtn">
+                        ❮
+                    </button>
+
+
+                    <button class="slide-btn next"
+                        id="nextSlideBtn">
+                        ❯
+                    </button>
+
+
+                    <div class="slide-indicators">
+
+                        <span class="indicator active"
+                            data-slide="0">
+                        </span>
+
+                        <span class="indicator"
+                            data-slide="1">
+                        </span>
+
+                        <span class="indicator"
+                            data-slide="2">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MUSIC
+             ================================================= -->
+
+        <section id="music"
+            class="music-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+                    🎵 Bubu's Favourite Songs
+                </h2>
+
+
+                <div class="music-player">
+
+                    <div class="player-display">
+
+                        <div class="album-art">
+
+                            <div class="vinyl-record"
+                                id="vinylRecord">
+
+                                <div class="vinyl-center"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="track-info">
+
+                            <h3 id="trackTitle">
+                                This is called love
+                            </h3>
+
+
+                            <p id="trackArtist">
+                                Birthday Collection
+                            </p>
+
+
+                            <div class="progress-container">
+
+                                <div class="progress-bar"
+                                    id="progressBar">
+
+                                    <div class="progress"
+                                        id="progress">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="time-display">
+
+                                    <span id="currentTime">
+                                        0:00
+                                    </span>
+
+                                    <span id="duration">
+                                        0:00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="player-controls">
+
+                        <button class="control-btn"
+                            id="prevTrackBtn">
+                            ⏮️
+                        </button>
+
+
+                        <button class="control-btn play-pause-btn"
+                            id="playPauseBtn">
+                            ▶️
+                        </button>
+
+
+                        <button class="control-btn"
+                            id="nextTrackBtn">
+                            ⏭️
+                        </button>
+
+                    </div>
+
+
+                    <div class="volume-control">
+
+                        <span>🔊</span>
+
+                        <input type="range"
+                            id="volumeSlider"
+                            min="0"
+                            max="100"
+                            value="50">
+
+                    </div>
+
+
+                    <div class="playlist">
+
+                        <h4>
+                            🎶 Playlist
+                        </h4>
+
+
+                        <div class="playlist-item active"
+                            data-track="0">
+
+                            <span>
+                                1. This is called love ❤️
+                            </span>
+
+                            <span>
+                                25.mp3
+                            </span>
+
+                        </div>
+
+
+                        <div class="playlist-item"
+                            data-track="1">
+
+                            <span>
+                                2. Hum Durd
+                            </span>
+
+                            <span>
+                                Hum_Durd.mpeg
+                            </span>
+
+                        </div>
+
+
+                        <div class="playlist-item"
+                            data-track="2">
+
+                            <span>
+                                3. Gilheriyan
+                            </span>
+
+                            <span>
+                                gilheriyan.mpeg
+                            </span>
+
+                        </div>
+
+
+                        <div class="playlist-item"
+                            data-track="3">
+
+                            <span>
+                                4. Apna Bana Le Piya
+                            </span>
+
+                            <span>
+                                ApnaBanale.mpeg
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <audio id="audioPlayer"
+                        preload="metadata">
+
+                        <source src="audio/25.mp3"
+                            type="audio/mpeg">
+
+                    </audio>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GAME
+             ================================================= -->
+
+        <section id="game"
+            class="game-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+                    🧩 Birthday Puzzle Challenge
+                </h2>
+
+
+                <div class="game-controls">
+
+                    <div class="difficulty-selector">
+
+                        <label>
+                            Difficulty:
+                        </label>
+
+                        <select id="difficultySelect">
+
+                            <option value="easy">
+                                Easy (3x3)
+                            </option>
+
+                            <option value="medium">
+                                Medium (4x4)
+                            </option>
+
+                            <option value="hard">
+                                Hard (5x5)
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="game-stats">
+
+                        <div class="stat">
+
+                            <span>
+                                Time:
+                            </span>
+
+                            <span id="gameTimer">
+                                00:00
+                            </span>
+
+                        </div>
+
+
+                        <div class="stat">
+
+                            <span>
+                                Moves:
+                            </span>
+
+                            <span id="moveCounter">
+                                0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="game-btn"
+                        id="newGameBtn">
+                        New Game
+                    </button>
+
+
+                    <button class="game-btn"
+                        id="showSolutionBtn">
+                        Show Solution
+                    </button>
+
+                </div>
+
+
+                <div class="puzzle-container">
+
+                    <div class="puzzle-board"
+                        id="puzzleBoard">
+                    </div>
+
+
+                    <div class="solution-preview"
+                        id="solutionPreview">
+
+                        <h4>
+                            Solution Preview:
+                        </h4>
+
+                        <img src=""
+                            alt="Solution"
+                            id="solutionImage">
+
+                    </div>
+
+                </div>
+
+
+                <div class="game-completion"
+                    id="gameCompletion"
+                    style="display:none;">
+
+                    <div class="completion-message">
+
+                        <h3>
+                            🎉 Congratulations! 🎉
+                        </h3>
+
+                        <p>
+                            You solved the puzzle!
+                        </p>
+
+                        <p>
+                            Time:
+                            <span id="finalTime"></span>
+                        </p>
+
+                        <p>
+                            Moves:
+                            <span id="finalMoves"></span>
+                        </p>
+
+                        <button class="game-btn"
+                            id="playAgainBtn">
+                            Play Again
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             COUNTDOWN
+             ================================================= -->
+
+        <section id="countdown"
+            class="countdown-section">
+
+            <div class="container">
+
+                <h2 class="section-title">
+                    ⏰ Birthday Countdown
+                </h2>
+
+
+                <div class="countdown-container">
+
+                    <div class="countdown-input">
+
+                        <label for="birthdayDate">
+                            Set Your Birthday Date:
+                        </label>
+
+                        <input type="datetime-local"
+                            id="birthdayDate">
+
+                    </div>
+
+
+                    <div class="countdown-display"
+                        id="countdownDisplay">
+
+                        <div class="time-unit">
+
+                            <span class="time-number"
+                                id="days">
+                                00
+                            </span>
+
+                            <span class="time-label">
+                                Days
+                            </span>
+
+                        </div>
+
+
+                        <div class="time-unit">
+
+                            <span class="time-number"
+                                id="hours">
+                                00
+                            </span>
+
+                            <span class="time-label">
+                                Hours
+                            </span>
+
+                        </div>
+
+
+                        <div class="time-unit">
+
+                            <span class="time-number"
+                                id="minutes">
+                                00
+                            </span>
+
+                            <span class="time-label">
+                                Minutes
+                            </span>
+
+                        </div>
+
+
+                        <div class="time-unit">
+
+                            <span class="time-number"
+                                id="seconds">
+                                00
+                            </span>
+
+                            <span class="time-label">
+                                Seconds
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="countdown-message"
+                        id="countdownMessage">
+
+                        <p>
+                            Set your birthday date to start the countdown!
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer class="footer">
+
+            <div class="container">
+
+                <p>
+                    &copy; Bubu's 2026 Birthday Celebration Website.
+                    Made with ❤️ for special moments by your
+                    half-pant engineer bro!
+                </p>
+
+
+                <div class="footer-links">
+
+                    <a href="#home">Home</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#music">Music</a>
+                    <a href="#game">Game</a>
+                    <a href="#countdown">Countdown</a>
+
+                </div>
+
+            </div>
+
+        </footer>
 
     </div>
 
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
+    <!-- =====================================================
+         SECOND PAGE — SPECIAL BIRTHDAY MESSAGE
+         ===================================================== -->
 
-        <div class="nav-container">
-
-            <div class="nav-logo">
-                🎂 Birthday Bash
-            </div>
+    <section id="specialMessagePage"
+        class="special-message-page">
 
 
-            <div class="nav-toggle"
-                 id="navToggle">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </div>
-
-
-            <ul class="nav-menu"
-                id="navMenu">
-
-                <li>
-                    <a href="#home"
-                       class="nav-link">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#gallery"
-                       class="nav-link">
-                        Gallery
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#music"
-                       class="nav-link">
-                        Music
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#game"
-                       class="nav-link">
-                        Game
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#countdown"
-                       class="nav-link">
-                        Countdown
-                    </a>
-                </li>
-
-            </ul>
-
+        <!-- Balloons -->
+        <div class="message-balloons"
+            id="messageBalloons">
         </div>
 
-    </nav>
+
+        <!-- Small decorative elements -->
+
+        <div class="message-stars">
+            ✨
+        </div>
 
 
-    <!-- Hero Section -->
-    <section id="home"
-             class="hero">
+        <div class="special-message-content">
 
-        <div class="hero-content">
+            <div class="message-top">
+                🎂 💖 🎉
+            </div>
 
-            <h1 class="hero-title animate-bounce">
-                Advance Happy Birthday Bubu! 🎉
+
+            <h1>
+                Happy Birthday Bubu! ❤️
             </h1>
 
 
-            <p class="hero-subtitle">
-                Let's celebrate this special day together!
+            <p class="message-subtitle">
+                A little surprise from your Dudu 🥰
             </p>
 
 
-            <div class="birthday-candles">
+            <div class="birthday-letter">
 
-                <div class="candle">
-
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
-
-                </div>
+                <p>
+                    Dear Bubu ❤️,
+                </p>
 
 
-                <div class="candle">
-
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
-
-                </div>
+                <p>
+                    Advance Happy Birthday! 🎂
+                </p>
 
 
-                <div class="candle">
+                <p>
+                    I know your birthday is still three months away,
+                    but I keep it to say because whenever I go
+                    somewhere, I feel like you also go there.
+                    I don't know why. 😒❤️
+                </p>
 
-                    <div class="flame"></div>
-                    <div class="wick"></div>
-                    <div class="wax"></div>
 
-                </div>
+                <p>
+                    So why wait for your birthday to wish you?
+                    You deserve to be wished and celebrated
+                    every day. 🥰
+                </p>
+
+
+                <p>
+                    I wish this coming year brings you lots of
+                    happiness, beautiful memories, new adventures
+                    and success in everything you do.
+                </p>
+
+
+                <p>
+                    Always keep smiling and stay the same
+                    cute Bubu. ❤️
+                </p>
+
+
+                <p class="love-message">
+                    With lots of love ❤️
+                    <br>
+                    Your half-pant engineer bro 😎
+                </p>
 
             </div>
 
 
-            <button class="cta-button"
-                    id="celebrateBtn">
+            <div class="now-playing">
 
-                Start the Celebration! 🎊
+                🎵 Now Playing:
+                <strong>
+                    This is called love ❤️
+                </strong>
+
+            </div>
+
+
+            <button id="backToWebsite"
+                class="back-button">
+
+                ← Back to Birthday Website
 
             </button>
 
         </div>
 
-    </section>
 
+        <!-- Audio specifically for the second page -->
 
-    <!-- Birthday Wish Section -->
-    <section class="birthday-wish-section">
+        <audio id="celebrationAudio"
+            preload="auto">
 
-        <div class="container">
+            <source src="audio/25.mp3"
+                type="audio/mpeg">
 
-            <h2 class="section-title">
-                💖 A Special Message for You
-            </h2>
-
-
-            <div class="birthday-wish">
-
-                <p>
-                    Advance Happy Birthday, Bubu! 🎂❤️
-                </p>
-
-
-                <p>
-                    Happy Birthday! I keep it to say because after 3 months
-                    Whatever I go or you also go I do't know 
-                    Wishing you a fantastic day filled
-                    with celebration, great food, and even better company.
-                    May this year bring you continuous happiness,
-                    new adventures, and success in everything you will do.
-                    Enjoy your special day!
-                </p>
-
-
-                <p>
-                    With lots of love ❤️
-                </p>
-
-            </div>
-
-        </div>
+        </audio>
 
     </section>
 
 
-    <!-- Photo Gallery Section -->
-    <section id="gallery"
-             class="gallery-section">
+    <!-- JavaScript -->
 
-        <div class="container">
-
-            <h2 class="section-title">
-                📸 Memory Gallery
-            </h2>
-
-
-            <div class="gallery-controls">
-
-                <button class="gallery-btn"
-                        id="gridViewBtn">
-                    Grid View
-                </button>
-
-
-                <button class="gallery-btn"
-                        id="slideshowViewBtn">
-                    Slideshow
-                </button>
-
-            </div>
-
-
-            <!-- Grid View -->
-            <div class="gallery-grid"
-                 id="galleryGrid">
-
-
-                <!-- Photo 1 -->
-                <div class="gallery-item"
-                     data-caption="Birthday Party 2024">
-
-                    <img src="Bubu1.jpeg"
-                         alt="Educated Bubu">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Educated Bubu
-                        </h3>
-
-                        <p>
-                            Bubu spend her time with family
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Photo 2 -->
-                <div class="gallery-item"
-                     data-caption="Cake Time!">
-
-                    <img src="Bubu2.jpeg"
-                         alt="Professional Bubu">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Professional Bubu
-                        </h3>
-
-                        <p>
-                            Bubu when travel with college friend
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Photo 3 -->
-                <div class="gallery-item"
-                     data-caption="Friends Forever">
-
-                    <img src="Bubu3.jpeg"
-                         alt="Smart Bubu">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Smart Bubu
-                        </h3>
-
-                        <p>
-                            Educational tour in college trip
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Photo 4 -->
-                <div class="gallery-item"
-                     data-caption="Birthday Surprise">
-
-                    <img src="Bubu4.jpeg"
-                         alt="Cute Bubu Rani">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Cute Bubu Rani
-                        </h3>
-
-                        <p>
-                            Pure beauty of Bubu
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Photo 5 -->
-                <div class="gallery-item"
-                     data-caption="Party Decorations">
-
-                    <img src="Bubu5.jpeg"
-                         alt="Bhoot Bubu">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Bhoot Bubu
-                        </h3>
-
-                        <p>
-                            Bubu Celebrate Holi but not with me
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Photo 6 -->
-                <div class="gallery-item"
-                     data-caption="Group Photo">
-
-                    <img src="Bubu6.jpeg"
-                         alt="Bubu in phase of Ma Durga">
-
-                    <div class="gallery-overlay">
-
-                        <h3>
-                            Bubu in face of Ma Durga
-                        </h3>
-
-                        <p>
-                            Bubu in the face of Ma Durga,
-                            real beauty of Ma Durga
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- Slideshow View -->
-            <div class="gallery-slideshow"
-                 id="gallerySlideshow"
-                 style="display: none;">
-
-                <div class="slideshow-container">
-
-
-                    <div class="slide active">
-
-                        <img src="Bubu7.jpeg"
-                             alt="Bubu in  Museum">
-
-                        <div class="slide-caption">
-                            Bubu in Museum explore alone
-                        </div>
-
-                    </div>
-
-
-                    <div class="slide">
-
-                        <img src="Bubu8.jpeg"
-                             alt="Bubu with her friend">
-
-                        <div class="slide-caption">
-                            Bubu with her friend
-                        </div>
-
-                    </div>
-
-
-                    <div class="slide">
-
-                        <img src="Bubu3.jpeg"
-                             alt="Traditional Bubu">
-
-                        <div class="slide-caption">
-                            Bubu follow traditional
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button class="slide-btn prev"
-                        id="prevSlideBtn">
-                    ❮
-                </button>
-
-
-                <button class="slide-btn next"
-                        id="nextSlideBtn">
-                    ❯
-                </button>
-
-
-                <div class="slide-indicators">
-
-                    <span class="indicator active"
-                          data-slide="0"></span>
-
-                    <span class="indicator"
-                          data-slide="1"></span>
-
-                    <span class="indicator"
-                          data-slide="2"></span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Music Section -->
-    <section id="music"
-             class="music-section">
-
-        <div class="container">
-
-            <h2 class="section-title">
-                🎵 Bubu's Favourite Songs
-            </h2>
-
-
-            <div class="music-player">
-
-
-                <div class="player-display">
-
-                    <div class="album-art">
-
-                        <div class="vinyl-record"
-                             id="vinylRecord">
-
-                            <div class="vinyl-center"></div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="track-info">
-
-                        <h3 id="trackTitle">
-                            This is called love
-                        </h3>
-
-
-                        <p id="trackArtist">
-                            Birthday Collection
-                        </p>
-
-
-                        <div class="progress-container">
-
-                            <div class="progress-bar"
-                                 id="progressBar">
-
-                                <div class="progress"
-                                     id="progress"></div>
-
-                            </div>
-
-
-                            <div class="time-display">
-
-                                <span id="currentTime">
-                                    0:00
-                                </span>
-
-                                <span id="duration">
-                                    0:00
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Player Controls -->
-                <div class="player-controls">
-
-                    <button class="control-btn"
-                            id="prevTrackBtn">
-                        ⏮️
-                    </button>
-
-
-                    <button class="control-btn play-pause-btn"
-                            id="playPauseBtn">
-                        ▶️
-                    </button>
-
-
-                    <button class="control-btn"
-                            id="nextTrackBtn">
-                        ⏭️
-                    </button>
-
-                </div>
-
-
-                <!-- Volume -->
-                <div class="volume-control">
-
-                    <span>🔊</span>
-
-                    <input type="range"
-                           id="volumeSlider"
-                           min="0"
-                           max="100"
-                           value="50">
-
-                </div>
-
-
-                <!-- Playlist -->
-                <div class="playlist">
-
-                    <h4>
-                        🎶 Playlist
-                    </h4>
-
-
-                    <div class="playlist-item active"
-                         data-track="0">
-
-                        <span>
-                            1. This is called love
-                        </span>
-
-                        <span>
-                            25.mp3
-                        </span>
-
-                    </div>
-
-
-                    <div class="playlist-item"
-                         data-track="1">
-
-                        <span>
-                            2. Hum Durd
-                        </span>
-
-                        <span>
-                            Hum_Durd.mpeg
-                        </span>
-
-                    </div>
-
-
-                    <div class="playlist-item"
-                         data-track="2">
-
-                        <span>
-                            3. Gilheriyan
-                        </span>
-
-                        <span>
-                            gilheriyan.mpeg
-                        </span>
-
-                    </div>
-
-
-                    <div class="playlist-item"
-                         data-track="3">
-
-                        <span>
-                            4. Apna Bana Le Piya
-                        </span>
-
-                        <span>
-                            ApnaBanale.mpeg
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Audio Element -->
-                <audio id="audioPlayer"
-                       preload="metadata">
-
-                    <source src="audio/25.mp3"
-                            type="audio/mpeg">
-
-                </audio>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Puzzle Game Section -->
-    <section id="game"
-             class="game-section">
-
-        <div class="container">
-
-            <h2 class="section-title">
-                🧩 Birthday Puzzle Challenge
-            </h2>
-
-
-            <div class="game-controls">
-
-                <div class="difficulty-selector">
-
-                    <label>
-                        Difficulty:
-                    </label>
-
-
-                    <select id="difficultySelect">
-
-                        <option value="easy">
-                            Easy (3x3)
-                        </option>
-
-                        <option value="medium">
-                            Medium (4x4)
-                        </option>
-
-                        <option value="hard">
-                            Hard (5x5)
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="game-stats">
-
-                    <div class="stat">
-
-                        <span>
-                            Time:
-                        </span>
-
-                        <span id="gameTimer">
-                            00:00
-                        </span>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <span>
-                            Moves:
-                        </span>
-
-                        <span id="moveCounter">
-                            0
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <button class="game-btn"
-                        id="newGameBtn">
-                    New Game
-                </button>
-
-
-                <button class="game-btn"
-                        id="showSolutionBtn">
-                    Show Solution
-                </button>
-
-            </div>
-
-
-            <div class="puzzle-container">
-
-                <div class="puzzle-board"
-                     id="puzzleBoard">
-
-                    <!-- Puzzle pieces will be generated here -->
-
-                </div>
-
-
-                <div class="solution-preview"
-                     id="solutionPreview">
-
-                    <h4>
-                        Solution Preview:
-                    </h4>
-
-                    <img src=""
-                         alt="Solution"
-                         id="solutionImage">
-
-                </div>
-
-            </div>
-
-
-            <div class="game-completion"
-                 id="gameCompletion"
-                 style="display: none;">
-
-                <div class="completion-message">
-
-                    <h3>
-                        🎉 Congratulations! 🎉
-                    </h3>
-
-                    <p>
-                        You solved the puzzle!
-                    </p>
-
-                    <p>
-                        Time:
-                        <span id="finalTime"></span>
-                    </p>
-
-                    <p>
-                        Moves:
-                        <span id="finalMoves"></span>
-                    </p>
-
-                    <button class="game-btn"
-                            id="playAgainBtn">
-                        Play Again
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Countdown Section -->
-    <section id="countdown"
-             class="countdown-section">
-
-        <div class="container">
-
-            <h2 class="section-title">
-                ⏰ Birthday Countdown
-            </h2>
-
-
-            <div class="countdown-container">
-
-                <div class="countdown-input">
-
-                    <label for="birthdayDate">
-                        Set Your Birthday Date:
-                    </label>
-
-                    <input type="datetime-local"
-                           id="birthdayDate">
-
-                </div>
-
-
-                <div class="countdown-display"
-                     id="countdownDisplay">
-
-
-                    <div class="time-unit">
-
-                        <span class="time-number"
-                              id="days">
-                            00
-                        </span>
-
-                        <span class="time-label">
-                            Days
-                        </span>
-
-                    </div>
-
-
-                    <div class="time-unit">
-
-                        <span class="time-number"
-                              id="hours">
-                            00
-                        </span>
-
-                        <span class="time-label">
-                            Hours
-                        </span>
-
-                    </div>
-
-
-                    <div class="time-unit">
-
-                        <span class="time-number"
-                              id="minutes">
-                            00
-                        </span>
-
-                        <span class="time-label">
-                            Minutes
-                        </span>
-
-                    </div>
-
-
-                    <div class="time-unit">
-
-                        <span class="time-number"
-                              id="seconds">
-                            00
-                        </span>
-
-                        <span class="time-label">
-                            Seconds
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="countdown-message"
-                     id="countdownMessage">
-
-                    <p>
-                        Set your birthday date to start the countdown!
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-
-        <div class="container">
-
-            <p>
-                &copy; Bubu's 2026 Birthday Celebration Website.
-                Made with ❤️ for special moments by your expected Dudu!
-            </p>
-
-
-            <div class="footer-links">
-
-                <a href="#home">Home</a>
-                <a href="#gallery">Gallery</a>
-                <a href="#music">Music</a>
-                <a href="#game">Game</a>
-                <a href="#countdown">Countdown</a>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-    <!-- Scripts -->
     <script src="script.js"></script>
 
 </body>
